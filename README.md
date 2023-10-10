@@ -1,6 +1,5 @@
 
-# Project Title
-***goImapAttachementDownloader***
+# goImapAttachementDownloader
 
 ## Description
 
