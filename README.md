@@ -34,19 +34,15 @@ go build -o imapattachements main.go
 ./imapattachments
 ```
 
-## Help
+If all goes well, a ***files*** directory will be created in the cwd. Then
+for each email that has attachements a sub directory will be created using the
+***from address***.  Individual attachments from that address will be placed 
+inside this sub directory. NOTE: Multiple emails from the same 
+***from address*** will use the same directory. Emails from the same
+***from address*** that have attachments that share the same name as a previous
+attachment will overwrite each other, this meets my needs but should be trivial 
+to change if you so desire.
 
-Gmail will require;
-1) imap turned on
-2) an application password if 2MFA enabled.
-
-If all goes well, a ***files*** directory will be created at cwd. Then
-for each email that has attachements a sub directory of the ***from address***
-will be created with the individual attachments inside. Multiple emails from
-the same from address will use the same directory. Emails from the same
-***from address*** that are named the same as a previous attachment with the
-same xtension will overwrite each other, this meets my needs but should be
-trivial to change if you so desire.
 
 ```
 └──▶ tree files/
@@ -70,6 +66,14 @@ files/
 │   └── photo.JPG
 ...
 ```
+
+
+## Help
+
+Gmail will require;
+1) imap turned on
+2) an application password if 2MFA enabled.
+
 
 ## Authors
 
