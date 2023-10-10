@@ -16,8 +16,8 @@ Example of how to download attachments from an IMAP server using golang
 
 ```
 IMAP_USER=<string:   set to your userid, probably your email addr>
-IMAP_PASS=<string:   set to your email password or api password>
-IMAP_PORT=<Integer:  set to your servers port probably 993>
+IMAP_PASS=<string:   set to your email password or app password>
+IMAP_PORT=<Integer:  set to your imap servers port probably 993>
 IMAP_SERVER=<string: set to the dns or ip of your IMAP server>
 
 export IMAP_USER IMAP_PASS IMAP_SERVER IMAP_PORT
@@ -40,6 +40,32 @@ Gmail will require;
 1) imap turned on
 2) an application password if 2MFA enabled.
 
+If all goes well, a ***files*** directory will be created at cwd. Then
+for each email that has attachements a sub directory of the ***from address***
+will be created with the individual attachments inside.
+
+```
+└──▶ tree files/
+files/
+├── "nobody" <nobody@gmail.com>
+│   ├── ATT00001.txt
+│   ├── Easter Bunny.JPG
+│   ├── Tired Boys.JPG
+│   ├── image001.jpg
+│   ├── image001.png
+│   ├── image002.jpg
+│   ├── image002.png
+│   ├── image003.jpg
+│   ├── image003.png
+│   ├── image004.jpg
+│   ├── image004.png
+│   ├── image005.jpg
+│   ├── image1.jpg
+│   ├── image2.jpg
+│   ├── image3.jpg
+│   └── photo.JPG
+...
+```
 
 ## Authors
 
