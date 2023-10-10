@@ -41,7 +41,10 @@ Gmail will require;
 
 If all goes well, a ***files*** directory will be created at cwd. Then
 for each email that has attachements a sub directory of the ***from address***
-will be created with the individual attachments inside.
+will be created with the individual attachments inside. Multiple emails from
+the same from address will use the same directory. Files with the same name and
+extension will overwrite each other, this meets my needs but should be trivial
+to change if you so desire.
 
 ```
 └──▶ tree files/
