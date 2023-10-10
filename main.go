@@ -44,8 +44,8 @@ func init() {
 	u, userb := os.LookupEnv("IMAP_USER")
 	p, passb := os.LookupEnv("IMAP_PASS")
 	s, serverb := os.LookupEnv("IMAP_SERVER")
-	pt, serverp := os.LookupEnv("IMAP_PORT")
-	if !userb || !passb || !serverb || !serverp {
+	pt, serverb := os.LookupEnv("IMAP_PORT")
+	if !userb || !passb || !serverb || !serverb {
 		fmt.Fprintf(os.Stderr, "Please set required environment variables IMAP_USER , IMAP_PASS, IMAP_SERVER, IMAP_PORT\n")
 		os.Exit(1)
 	}
