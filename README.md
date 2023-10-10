@@ -59,6 +59,6 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
  * attachments from an imap server and place them        *
  * in cwd/files/{from address}/                          *
  * Thank you Brian                                       *
- * Brian's pgk: http://github.com/BrianLeishman/go-imap/ *
+ * Brian's pkg: http://github.com/BrianLeishman/go-imap/ *
  *********************************************************/
  ```
