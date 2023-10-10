@@ -47,8 +47,6 @@ Contributors names and contact info
 
 ex. Twiddlebits
 
-## Version History
-
 
 ## License
 
