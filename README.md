@@ -14,6 +14,7 @@ Example of how to download attachments from an IMAP server using golang
 ### Set environment variables
 
 ```
+
 IMAP_USER=<string:   set to your userid, probably your email addr>
 IMAP_PASS=<string:   set to your email or app password>
 IMAP_PORT=<Integer:  set to your imap servers port (probably 993)>
@@ -33,13 +34,15 @@ go build -o imapattachements main.go
 ./imapattachments
 ```
 
-If all goes well, a ***files*** directory will be created at cwd. Then
-for each email that has attachements a sub directory of the ***from address***
-will be created with the individual attachments inside. Multiple emails from
-the same ***from address*** will use the same directory. Seperate emails from
-the same ***from address*** with attachments that share the same name and
-extension will overwrite each other, this meets my needs but would be trivial
+If all goes well, a ***files*** directory will be created in the cwd. Then
+for each email that has attachements a sub directory will be created using the
+***from address***.  Individual attachments from that address will be placed 
+inside this sub directory. NOTE: Multiple emails from the same 
+***from address*** will use the same directory. Emails from the same
+***from address*** that have attachments that share the same name as a previous
+attachment will overwrite each other, this meets my needs but should be trivial 
 to change if you so desire.
+
 
 ```
 └──▶ tree files/
