@@ -14,6 +14,7 @@ Example of how to download attachments from an IMAP server using golang
 ### Set environment variables
 
 ```
+
 IMAP_USER=<string:   set to your userid, probably your email addr>
 IMAP_PASS=<string:   set to your email or app password>
 IMAP_PORT=<Integer:  set to your imap servers port (probably 993)>
