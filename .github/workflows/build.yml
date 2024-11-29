@@ -18,3 +18,10 @@ jobs:
 
     - name: Build
       run: make
+
+    - name: Verify Build
+      run: |
+        if ! make; then
+          echo "Build failed"
+          exit 1
+        fi
