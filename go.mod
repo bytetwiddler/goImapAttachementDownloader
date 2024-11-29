@@ -1,6 +1,6 @@
 module tt
 
-go 1.21.1
+go 1.23.1
 
 require github.com/BrianLeishman/go-imap v0.1.2
 
