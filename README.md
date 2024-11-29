@@ -9,7 +9,7 @@ Example of how to download attachments from an IMAP server using golang
 
 ### Dependencies
 
-* Go Version 1.19 or greater
+* Go Version 1.23 or greater
 
 ### Set environment variables
 
@@ -30,8 +30,8 @@ go run main.go
 
 or
 
-go build -o imapattachements main.go
-./imapattachments
+go build -o ImapDownloader main.go
+./ImapDownloader
 ```
 
 If all goes well, a ***files*** directory will be created in the cwd. Then

@@ -10,6 +10,7 @@ package main
  *********************************************************/
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -20,7 +21,7 @@ import (
 
 func check(err error) {
 	if err != nil {
-		log.Println(err.Error)
+		log.Println(err)
 	}
 }
 
@@ -33,22 +34,60 @@ func mkDir(dirName string) {
 	}
 }
 
+// mamma don't allow no globals round here but I don't care
+// if mamma don't allow, play my globals any o' how
 var (
-	user   string
-	pass   string
-	server string
-	port   int
+	user       string
+	pass       string
+	server     string
+	port       int
+	version    string
+	build      string
+	versionPtr = new(bool)
+	usagePtr   = new(bool)
+	usage      = `Usage: imap-attachments
+Environment Variables:
+ ImapDownloader requires the following environment variables to be set:
+   IMAP_USER: The username for the IMAP server.
+   IMAP_PASS: The password for the IMAP server.
+   IMAP_SERVER: The server address for the IMAP server.
+   IMAP_PORT: The port for the IMAP server.
+
+ -v, --version: Prints version and build info.
+ -h, --help: prints usage message.`
 )
 
-func init() {
+func init() { //nolint:gochecknoinits // init is fine here
+	flag.BoolVar(versionPtr, "v", false, "version\tPrints version and build info.")
+	flag.BoolVar(versionPtr, "version", false, "version\tPrints version and build info.")
+	flag.BoolVar(usagePtr, "h", false, "help\tPrint program usage.")
+	flag.BoolVar(usagePtr, "help", false, "help\tPrint program usage.")
+	flag.Usage = func() {
+		fmt.Println(usage)
+	}
+
+	flag.Parse()
+
+	if *usagePtr {
+		flag.Usage()
+		os.Exit(0)
+	}
+
+	if *versionPtr {
+		fmt.Printf("Version: %s\nBuild: %s\n", version, build)
+		os.Exit(0)
+	}
+
 	u, userb := os.LookupEnv("IMAP_USER")
 	p, passb := os.LookupEnv("IMAP_PASS")
 	s, serverb := os.LookupEnv("IMAP_SERVER")
-	pt, serverb := os.LookupEnv("IMAP_PORT")
-	if !userb || !passb || !serverb || !serverb {
+	pt, portb := os.LookupEnv("IMAP_PORT")
+
+	if !userb || !passb || !serverb || !portb {
 		fmt.Fprintf(os.Stderr, "Please set required environment variables IMAP_USER , IMAP_PASS, IMAP_SERVER, IMAP_PORT\n")
 		os.Exit(1)
 	}
+
 	user = u
 	pass = p
 	server = s
@@ -57,7 +96,6 @@ func init() {
 }
 
 func main() {
-
 	// Defaults to false. This package level option turns on or off debugging output, essentially.
 	// If verbose is set to true, then every command, and every response, is printed,
 	// along with other things like error messages (before the retry limit is reached)
@@ -78,9 +116,8 @@ func main() {
 	folders, err := im.GetFolders()
 	check(err)
 
-	// Now we can loop through those folders
+	// Now we can loop through those folders.
 	for _, f := range folders {
-
 		err = im.SelectFolder(f)
 		check(err)
 
@@ -95,14 +132,17 @@ func main() {
 				log.Printf("\n----\nFrom: %v\n", e.From.String())
 				log.Printf("Subject: %v\n", e.Subject)
 				a := e.Attachments
+
 				for _, f := range a {
 					log.Printf("name: %v\ntype: %v\n", f.Name, f.MimeType)
-					if len(f.Name) > 0 {
+
+					if f.Name != "" {
 						dirName := fmt.Sprintf("files/%v", e.From.String())
 						mkDir(dirName)
 						path := fmt.Sprintf("%v/%v", dirName, f.Name)
 						log.Printf("path: %v\n", path)
-						err := os.WriteFile(path, f.Content, 0644)
+						err := os.WriteFile(path, f.Content, 0o600)
+
 						if err != nil {
 							panic(err)
 						}
