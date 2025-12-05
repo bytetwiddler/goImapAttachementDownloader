@@ -110,7 +110,11 @@ func main() {
 	// Create a new instance of the IMAP connection you want to use
 	im, err := imap.New(user, pass, server, port)
 	check(err)
-	defer im.Close()
+	defer func() {
+		if err := im.Close(); err != nil {
+			log.Printf("im.Close() failed to close: %v", err)
+		}
+	}()
 
 	// Folders now contains a string slice of all the folder names on the connection
 	folders, err := im.GetFolders()
@@ -142,7 +146,6 @@ func main() {
 						path := fmt.Sprintf("%v/%v", dirName, f.Name)
 						log.Printf("path: %v\n", path)
 						err := os.WriteFile(path, f.Content, 0o600)
-
 						if err != nil {
 							panic(err)
 						}
